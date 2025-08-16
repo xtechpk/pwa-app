@@ -1,7 +1,7 @@
 // src/components/Notes.tsx
 import { useEffect, useState } from 'react';
 import { addNote, getNotes, syncNotes } from '../utils/db';
-import type { Note } from '../utils/db';
+import type { Note } from '../utils/db';  
 
 export default function Notes() {
   const [notes, setNotes] = useState<Note[]>([]);
