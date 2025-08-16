@@ -3,8 +3,8 @@
   "short_name": "PWAApp",
   "start_url": "/",
   "display": "standalone",
-  "display_override": "standalone",
-  "description": "A Progressive Web App built with React and TypeScript",
+  "display_override": ["window-controls-overlay"],
+  "description": "An advanced Progressive Web App with offline sync, push notifications, and more",
   "lang": "en",
   "dir": "auto",
   "theme_color": "#000000",
@@ -50,6 +50,20 @@
       "sizes": "1240x600",
       "type": "image/png",
       "description": "Splash screen"
+    },
+    {
+      "src": "/screenshots/notes.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Notes feature"
+    },
+    {
+      "src": "/screenshots/offline.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Offline mode"
     }
   ],
   "related_applications": [
@@ -64,6 +78,11 @@
       "name": "Dashboard",
       "url": "/dashboard",
       "description": "Go directly to the dashboard"
+    },
+    {
+      "name": "New Note",
+      "url": "/new-note",
+      "description": "Create a new note quickly"
     }
   ],
   "protocol_handlers": [
@@ -71,5 +90,33 @@
       "protocol": "web+myapp",
       "url": "/?q=%s"
     }
-  ]
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "files",
+          "accept": ["image/*", ".txt"]
+        }
+      ]
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "/open-file",
+      "accept": [
+        {
+          "description": "Text files",
+          "accept": [".txt", "text/plain"]
+        }
+      ]
+    }
+  ],
+  "categories": ["productivity", "utilities"]
 }
