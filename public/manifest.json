@@ -12,7 +12,7 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "/icons/icon-512.png",
+      "src": "",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -35,7 +35,7 @@
   "related_applications": [
     {
       "platform": "windows",
-      "url": "https://localhost:3000/manifest.json"
+      "url": "http://pwa-app-six-phi.vercel.app/"
     }
   ],
   "prefer_related_applications": false,

@@ -1,30 +1,18 @@
-import "./App.css";
 import InstallButton from "./components/InstallButton";
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 p-6">
-      <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8 text-center">
-        <h1 className="text-4xl font-extrabold text-blue-700 mb-3 tracking-tight">
-          🚀 My React + TypeScript PWA
-        </h1>
-        <p className="text-gray-600 text-lg">
-          Welcome to your Progressive Web App built with <span className="font-semibold">Vite + React!</span>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 text-white text-center p-6">
+      <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">🚀 My React + TypeScript PWA</h1>
+      <p className="text-lg max-w-lg mb-6">
+        Welcome to your Progressive Web App built with <span className="font-semibold">Vite + React</span>!
+      </p>
+      <div className="bg-white text-gray-900 rounded-2xl shadow-lg p-6 w-full max-w-md">
+        <p className="text-base leading-relaxed">
+          ✅ Installable on desktop & mobile.<br />📶 Works offline with caching.<br />📲 Add it to your home screen!
         </p>
-
-        <div className="mt-6 bg-blue-50 rounded-xl p-4 text-gray-700 text-sm leading-relaxed shadow-inner">
-          <p>✅ This app can now be installed on desktop & mobile.</p>
-          <p>📶 Works offline with caching.</p>
-          <p>📲 Try adding it to your home screen!</p>
-        </div>
-
-        <div className="mt-6 flex justify-center">
-          {/* Install button */}
-          <InstallButton />
-        </div>
       </div>
+      <InstallButton />
     </div>
   );
 }
-
-export default App;

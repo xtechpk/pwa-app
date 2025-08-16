@@ -1,49 +1,36 @@
+// src/components/InstallButton.tsx
 import { useEffect, useState } from "react";
 
-const InstallButton = () => {
+export default function InstallButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handler = (e: Event) => {
+    const handler = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setIsVisible(true); // show button when event is fired
+      setDeferredPrompt(e);
+      setVisible(true);
     };
-
     window.addEventListener("beforeinstallprompt", handler);
-
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
-    };
+    return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
 
-  const handleInstallClick = async () => {
+  const onInstall = async () => {
     if (!deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-
-    if (outcome === "accepted") {
-      console.log("User accepted the install prompt ✅");
-    } else {
-      console.log("User dismissed the install prompt ❌");
-    }
-
+    await deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
     setDeferredPrompt(null);
-    setIsVisible(false);
+    setVisible(false);
   };
 
-  if (!isVisible) return null;
+  if (!visible) return null;
 
   return (
     <button
-      onClick={handleInstallClick}
-      className="px-4 py-2 mt-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
+      onClick={onInstall}
+      className="fixed bottom-6 right-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow"
     >
-      📲 Install App
+      📥 Install App
     </button>
   );
-};
-
-export default InstallButton;
+}
