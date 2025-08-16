@@ -47,7 +47,7 @@ export default function InstallButton() {
       </style>
       <button
         onClick={onInstall}
-        className="fixed top-32 right-4 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-lg shadow-xl transition-all duration-500 ease-in-out transform hover:scale-110 active:scale-95 animate-slide-in-right focus:outline-none focus:ring-4 focus:ring-blue-300 flex items-center gap-3 overflow-hidden z-50"
+        className="fixed top-20 right-4 px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-lg shadow-xl transition-all duration-500 ease-in-out transform hover:scale-110 active:scale-95 animate-slide-in-right focus:outline-none focus:ring-4 focus:ring-blue-300 flex items-center gap-3 overflow-hidden z-50"
         // For bottom-right, replace 'top-4 right-4' with 'bottom-4 right-4'
       >
         <span className="relative z-10 flex items-center gap-3">
