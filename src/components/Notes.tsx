@@ -9,16 +9,15 @@ export default function Notes() {
 
   useEffect(() => {
     loadNotes();
-    // Periodic load or listen for changes if needed
   }, []);
 
   const loadNotes = async () => {
     const loaded = await getNotes();
     setNotes(loaded);
     const unsynced = loaded.filter(n => !n.synced).length;
-    if ('setAppBadge' in navigator && unsynced > 0) {
+    if ('setAppBadge' in navigator && unsynced > 0 && navigator.setAppBadge) {
       navigator.setAppBadge(unsynced);
-    } else if (unsynced === 0 && 'clearAppBadge' in navigator) {
+    } else if (unsynced === 0 && 'clearAppBadge' in navigator && navigator.clearAppBadge) {
       navigator.clearAppBadge();
     }
   };
@@ -35,19 +34,26 @@ export default function Notes() {
   };
 
   return (
-    <div className="mt-6 w-full max-w-md">
-      <h2 className="text-2xl font-bold mb-2">Notes (Offline-Sync Enabled)</h2>
-      <input
-        type="text"
-        value={newNote}
-        onChange={(e) => setNewNote(e.target.value)}
-        className="w-full p-2 border rounded text-gray-900"
-        placeholder="Add a note..."
-      />
-      <button onClick={handleAdd} className="mt-2 px-4 py-2 bg-blue-600 text-white rounded">Save Note</button>
-      <ul className="mt-4">
+    <div className="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-xl">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Notes (Offline-Sync Enabled)</h2>
+      <div className="flex gap-2 mb-4">
+        <input
+          type="text"
+          value={newNote}
+          onChange={(e) => setNewNote(e.target.value)}
+          className="flex-1 p-3 border rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Add a note..."
+        />
+        <button onClick={handleAdd} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all">
+          Save
+        </button>
+      </div>
+      <ul className="space-y-2">
         {notes.map((note) => (
-          <li key={note.id} className="p-2 border-b">{note.content} {note.synced ? '(Synced)' : '(Pending)'}</li>
+          <li key={note.id} className="p-3 bg-gray-50 rounded-lg text-gray-800 flex justify-between">
+            <span>{note.content}</span>
+            <span className="text-sm text-gray-500">{note.synced ? '(Synced)' : '(Pending)'}</span>
+          </li>
         ))}
       </ul>
     </div>

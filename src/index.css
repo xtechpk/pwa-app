@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Custom styles */
+:root {
+  --theme-color: #000000;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+@layer components {
+  .sidebar-link {
+    @apply block py-2 px-4 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all text-lg font-medium;
+  }
+}

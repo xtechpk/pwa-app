@@ -6,14 +6,14 @@ const PRECACHE = [
   "/manifest.json",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
-  "/icons/badge.png" // Add if you have a badge icon
+  "/icons/badge.png"
 ];
 const HOSTNAME_WHITELIST = [
   self.location.hostname,
   "fonts.gstatic.com",
   "fonts.googleapis.com",
   "cdn.jsdelivr.net",
-  "jsonplaceholder.typicode.com" // For mock API
+  "jsonplaceholder.typicode.com"
 ];
 
 self.addEventListener("install", (event) => {
@@ -37,7 +37,6 @@ self.addEventListener("fetch", (event) => {
   if (!HOSTNAME_WHITELIST.includes(url.hostname)) return;
 
   if (url.pathname.startsWith('/api/')) {
-    // Network-first for APIs
     event.respondWith(
       fetch(event.request)
         .then((resp) => {
@@ -48,7 +47,6 @@ self.addEventListener("fetch", (event) => {
         .catch(() => caches.match(event.request))
     );
   } else {
-    // Stale-while-revalidate for others
     event.respondWith(
       caches.match(event.request).then((cached) => {
         const network = fetch(event.request)
@@ -66,7 +64,6 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-// Push notifications
 self.addEventListener('push', (event) => {
   const data = event.data.json();
   event.waitUntil(
@@ -89,22 +86,16 @@ self.addEventListener('notificationclick', (event) => {
   );
 });
 
-// Background sync
 self.addEventListener('sync', (event) => {
   if (event.tag === 'sync-notes') {
     event.waitUntil(syncNotes());
   }
 });
 
-// Example sync function (implement with IndexedDB reads)
 async function syncNotes() {
-  // Fetch pending notes from IndexedDB, post to API, clear if successful
-  // This is called from SW, so need to use self.indexedDB or postMessage to client
-  // For simplicity, assume clients handle sync on online, but for true bg sync:
   console.log('Syncing notes in background...');
-  // To make it work, you may need to open IndexedDB here:
-  const { openDB } = await import('https://cdn.jsdelivr.net/npm/idb@8/+esm'); // Import idb in SW if needed
-  const db = await openDB('pwa-db', 1);
+  const { openDB } = await import('https://cdn.jsdelivr.net/npm/idb@8/+esm');
+  const db = await openDB('pwa-db', 2);
   const unsynced = await db.getAllFromIndex('notes', 'synced', false);
   for (const note of unsynced) {
     await fetch('https://jsonplaceholder.typicode.com/posts', {
@@ -116,14 +107,12 @@ async function syncNotes() {
   }
 }
 
-// Periodic sync (if permission granted)
 self.addEventListener('periodicsync', (event) => {
   if (event.tag === 'periodic-update') {
-    event.waitUntil(updateData()); // e.g., fetch latest data
+    event.waitUntil(updateData());
   }
 });
 
 async function updateData() {
   console.log('Periodic update...');
-  // Add logic to fetch new data and cache
 }

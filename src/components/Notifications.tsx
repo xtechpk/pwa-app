@@ -11,11 +11,10 @@ export default function Notifications() {
     const reg = await navigator.serviceWorker.ready;
     const sub = await reg.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: 'YOUR_PUBLIC_VAPID_KEY_HERE' // Replace with your VAPID public key (base64)
+      applicationServerKey: 'YOUR_PUBLIC_VAPID_KEY_HERE'
     });
-    // Send subscription to your server (mock endpoint here)
-    await fetch('/api/subscribe', { 
-      method: 'POST', 
+    await fetch('/api/subscribe', {
+      method: 'POST',
       body: JSON.stringify(sub),
       headers: { 'Content-Type': 'application/json' }
     });
@@ -26,9 +25,9 @@ export default function Notifications() {
     <button
       onClick={subscribe}
       disabled={subscribed}
-      className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow mt-4"
+      className="fixed bottom-16 right-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg transition-all"
     >
-      {subscribed ? 'Subscribed to Notifications' : 'Enable Push Notifications'}
+      {subscribed ? 'Subscribed' : 'Enable Notifications'}
     </button>
   );
 }

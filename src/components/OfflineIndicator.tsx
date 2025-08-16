@@ -10,7 +10,6 @@ export default function OfflineIndicator() {
     const handleOffline = () => setOnline(false);
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
-    // Also trigger sync on online
     window.addEventListener('online', () => syncNotes().catch(console.error));
     return () => {
       window.removeEventListener('online', handleOnline);
@@ -21,5 +20,9 @@ export default function OfflineIndicator() {
 
   if (online) return null;
 
-  return <div className="fixed top-0 left-0 right-0 bg-red-600 text-white p-2 text-center">Offline - Changes will sync when online</div>;
+  return (
+    <div className="fixed top-0 left-0 right-0 bg-red-600 text-white p-3 text-center shadow-lg z-50">
+      Offline - Changes will sync when online
+    </div>
+  );
 }
